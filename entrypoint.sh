@@ -1,5 +1,4 @@
 #!/bin/ash
-set -e
 
 instance_id=$(curl --connect-timeout 10 --max-time 10 --retry 3 --retry-delay 0 --retry-max-time 60 -s http://169.254.169.254/latest/meta-data/instance-id)
 
