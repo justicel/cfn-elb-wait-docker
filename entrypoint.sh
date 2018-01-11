@@ -21,3 +21,11 @@ cfn-signal -e 0 -r "Instance setup finished" \
   --stack $CFN_STACK_NAME \
   --resource $CFN_NOTIFY_RESOURCE \
   --region $AWS_DEFAULT_REGION
+
+if [ "$!" == "1" ]; then
+  echo "Trying to mark instance as updated"
+  cfn-signal -e 0 -r "Instance upgrade finished" \
+    --stack $CFN_STACK_NAME \
+    --resource $CFN_UPDATE_RESOURCE \
+    --region $AWS_DEFAULT_REGION
+fi
