@@ -21,8 +21,8 @@ done
 
 echo "Marking instance as healthy!"
 
-# Run through twice to be safe
-for run in {1..2}; do
+# Run through a few times to be safe
+for run in {1..10}; do
   cfn-signal -e 0 -r "Instance setup finished" \
     --stack $CFN_STACK_NAME \
     --resource $CFN_NOTIFY_RESOURCE \
@@ -34,6 +34,8 @@ for run in {1..2}; do
       --stack $CFN_STACK_NAME \
       --resource $CFN_UPDATE_RESOURCE \
       --region $AWS_DEFAULT_REGION
+  else
+    break
   fi
 
   sleep 5
