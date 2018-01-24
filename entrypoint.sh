@@ -34,6 +34,9 @@ for run in {1..10}; do
       --stack $CFN_STACK_NAME \
       --resource $CFN_UPDATE_RESOURCE \
       --region $AWS_DEFAULT_REGION
+    if [ "$?" == "0" ]; then
+      break
+    fi
   else
     break
   fi
