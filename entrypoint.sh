@@ -1,4 +1,4 @@
-#!/bin/ash
+#!/bin/bash
 
 instance_id=$(curl --fail --connect-timeout 10 --max-time 10 --retry 3 --retry-delay 0 --retry-max-time 60 -s http://169.254.169.254/latest/meta-data/instance-id)
 
@@ -16,13 +16,13 @@ until [ "$state" == "\"InService\"" ]; do
     --instances ${instance_id} \
     --query InstanceStates[0].State)
   echo "Waiting for instance ${instance_id} to become healthy"
-  sleep 10
+  sleep 5
 done
 
 echo "Marking instance as healthy!"
 
 # Run through a few times to be safe
-for run in {1..10}; do
+for run in {1..20}; do
   cfn-signal -e 0 -r "Instance setup finished" \
     --stack $CFN_STACK_NAME \
     --resource $CFN_NOTIFY_RESOURCE \
